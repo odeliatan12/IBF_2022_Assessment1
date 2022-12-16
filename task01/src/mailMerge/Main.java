@@ -22,7 +22,7 @@ public class Main{
 
         try {
             reader = new BufferedReader(new FileReader(args[0]));
-            writer = new BufferedReader(new FileReader("thankyou.txt"));
+            writer = new BufferedReader(new FileReader(args[1]));
             
 
             // Reading the file line by line
@@ -53,7 +53,6 @@ public class Main{
                 while ((templatereader = writer.readLine()) != null) {
                     // Reiterating through the values
                     // Replace all <<occurrences>> with "the corresponding values"
-
                     // Defining the pattern
                     Pattern pattern = Pattern.compile("\\<\\<(\\w+)\\>\\>");
                     
@@ -69,25 +68,15 @@ public class Main{
                         String key = matcher.group(1);
                         
                         String value = record.get(key);
+
                         // Print the matched string and the key
-                        
-                        System.out.println(matchedString + " -> " + key);
-                    }
-                    
-                    templatereader = templatereader.replace("<<address>>", record.get("address"));
-                    templatereader = templatereader.replace("<<first_name>>", record.get("first_name"));
-                    templatereader = templatereader.replace("<<years>>", record.get("years"));
-                    
-                    // for (int i = 0; i < 1; i++) {
-                    //     // Print the modified line to the console
-                    //     System.out.println(templatereader);
-                    // }
-                    String[] emails = templatereader.toString().split("\n");
+                        templatereader = templatereader.replace(matchedString, value);
 
-                    for(String email: emails) {
-                        System.out.println(email);
+                        String[] emails = templatereader.toString().split("\n");
+                        for(String email: emails) {
+                            System.out.println(email);
+                        }
                     }
-
                     
                 }
 
