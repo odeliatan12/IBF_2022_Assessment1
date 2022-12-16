@@ -55,25 +55,24 @@ public class Main{
                     // Replace all <<occurrences>> with "the corresponding values"
 
                     // Defining the pattern
-                    Pattern pattern = Pattern.compile("<<(" + ")>>");
+                    Pattern pattern = Pattern.compile("\\<\\<(\\w+)\\>\\>");
                     
                     // Create a Matcher object
                     Matcher matcher = pattern.matcher(templatereader);
 
-                    
-
                     // Find all occurrences of the pattern in the input string
-                    // while (matcher.find()) {
-
-                    //     String key = matcher.group(1);
-                    //     List<String> values = record.get(key);
-
-                    //     for(int i = 0; i < record.get(key).size(); i++) {
-                    //         templatereader = templatereader.replace("<<" + key +">>", record.get(i));
-                    //     }
+                    while (matcher.find()) {
+                        // Get the matched string
+                        String matchedString = matcher.group();
                         
-                    // }
-
+                        // Get the value of the first capture group (the key)
+                        String key = matcher.group(1);
+                        
+                        String value = record.get(key);
+                        // Print the matched string and the key
+                        
+                        System.out.println(matchedString + " -> " + key);
+                    }
                     
                     templatereader = templatereader.replace("<<address>>", record.get("address"));
                     templatereader = templatereader.replace("<<first_name>>", record.get("first_name"));
